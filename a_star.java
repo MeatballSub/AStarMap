@@ -5,6 +5,11 @@ public class a_star
     private static final node failure = null;
     private static final int infinity = Integer.MAX_VALUE;
 
+    public static solution BaseBFS(problem p)
+    {
+        return RBFS(p, new node(p.getInitialState()), infinity);
+    }
+
     public static solution RBFS(problem p, node n, int limit)
     {
         if(p.goal_test(n.getState()))
