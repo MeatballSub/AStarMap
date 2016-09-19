@@ -7,7 +7,7 @@ public class a_star
 
     public static solution BaseBFS(problem p)
     {
-        return RBFS(p, new node(p.getInitialState()), infinity);
+        return RBFS(p, new node(p, null, p.getInitialState(), null), infinity);
     }
 
     public static solution RBFS(problem p, node n, int limit)
@@ -18,7 +18,7 @@ public class a_star
         }
 
         ArrayList<node> successors = new ArrayList<node>();
-        for(action a : p.getActions(n.getState()))
+        for(action a : p.getActions())
         {
             successors.add(new node(p, n, a));
         }
@@ -30,7 +30,7 @@ public class a_star
 
         for(node s : successors)
         {
-            s.setF( Math.max(s.getG() + s.getH(), n.f) );
+            s.setF( Math.max(s.getG() + s.getH(), n.getF()) );
         }
 
         while(true)
@@ -38,7 +38,7 @@ public class a_star
             node best = getBest(successors);
             if(best.getF() > limit)
             {
-                return new solution(failure, best.f);
+                return new solution(failure, best.getF());
             }
 
             int alternative = getAlternative(successors);
