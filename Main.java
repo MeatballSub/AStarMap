@@ -58,44 +58,52 @@ public class Main
         List<Action> result = rbfs.search(problem);
 
         double totalTravel = 0;
-        if (searchChoice == 0)
+        if (result.size() == 0)
         {
-            String prev = startState;
-            System.out.print(startState);
-            for(Action a : result)
-            {
-                String current = ((MapMoveAction)a).getDestination();
-                int prevIndex = inputReader.getCities().indexOf(prev);
-                int currentIndex = inputReader.getCities().indexOf(current);
-
-                double distance = inputReader.getDistances().get(prevIndex).get(currentIndex);
-                totalTravel = totalTravel + distance;
-
-                System.out.printf(" --(%.2f)--> %s", distance, current);
-                prev = current;
-            }
+            System.out.println("No path from the start state to the goal state found.");
             System.out.println();
-            System.out.printf("Total Distance Traveled: %.2f\n\n", totalTravel);
         }
-        else if (searchChoice == 1)
+        else
         {
-            String prev = startState;
-            System.out.print(startState);
-            for(Action a : result)
+            if (searchChoice == 0)
             {
-                String current = ((MapMoveAction)a).getDestination();
-                int prevIndex = inputReader.getCities().indexOf(prev);
-                int currentIndex = inputReader.getCities().indexOf(current);
-                double distanceTraveled = inputReader.getDistances().get(prevIndex).get(currentIndex);
-                double speedLimit = inputReader.getSpeeds().get(prevIndex).get(currentIndex);
-                double timeTraveled = (distanceTraveled/speedLimit) * 60;
-                totalTravel = totalTravel + timeTraveled;
+                String prev = startState;
+                System.out.print(startState);
+                for(Action a : result)
+                {
+                    String current = ((MapMoveAction)a).getDestination();
+                    int prevIndex = inputReader.getCities().indexOf(prev);
+                    int currentIndex = inputReader.getCities().indexOf(current);
 
-                System.out.printf(" --(%.2f)--> %s", timeTraveled, current);
-                prev = current;
+                    double distance = inputReader.getDistances().get(prevIndex).get(currentIndex);
+                    totalTravel = totalTravel + distance;
+
+                    System.out.printf(" --(%.2f)--> %s", distance, current);
+                    prev = current;
+                }
+                System.out.println();
+                System.out.printf("Total Distance Traveled: %.2f\n\n", totalTravel);
             }
-            System.out.println();
-            System.out.printf("Total Travel Time: %.2f\n\n", totalTravel);
+            else if (searchChoice == 1)
+            {
+                String prev = startState;
+                System.out.print(startState);
+                for(Action a : result)
+                {
+                    String current = ((MapMoveAction)a).getDestination();
+                    int prevIndex = inputReader.getCities().indexOf(prev);
+                    int currentIndex = inputReader.getCities().indexOf(current);
+                    double distanceTraveled = inputReader.getDistances().get(prevIndex).get(currentIndex);
+                    double speedLimit = inputReader.getSpeeds().get(prevIndex).get(currentIndex);
+                    double timeTraveled = (distanceTraveled/speedLimit) * 60;
+                    totalTravel = totalTravel + timeTraveled;
+
+                    System.out.printf(" --(%.2f)--> %s", timeTraveled, current);
+                    prev = current;
+                }
+                System.out.println();
+                System.out.printf("Total Travel Time: %.2f\n\n", totalTravel);
+            }
         }
     }
 }
