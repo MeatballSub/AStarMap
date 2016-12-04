@@ -4,37 +4,24 @@ public class Main
 {
     public static void main(String [] args)
     {
-        String goalState = "012345678";
+        String goalState = "Stormwind";
 
-        OutOfPlaceEvaluationFunction ef = new OutOfPlaceEvaluationFunction(goalState);
-        EightPuzzleActionsFunction actionsFunction = new EightPuzzleActionsFunction();
-        EightPuzzleResultFunction resultFunction = new EightPuzzleResultFunction();
-        EightPuzzleGoalTest goalTest = new EightPuzzleGoalTest(goalState);
+        MapTimeEvaluationFunction ef = new MapTimeEvaluationFunction(goalState);
+        MapMoveActionsFunction actionsFunction = new MapMoveActionsFunction();
+        MapResultFunction resultFunction = new MapResultFunction();
+        MapGoalTest goalTest = new MapGoalTest(goalState);
+        MapTimeStepCostFunction stepCostFunction = new MapTimeStepCostFunction();
 
-        Problem problem = new Problem("528417036", actionsFunction, resultFunction, goalTest);
+        Problem problem = new Problem("Silvermoon", actionsFunction, resultFunction, goalTest, stepCostFunction);
 
         RecursiveBestFirstSearch rbfs = new RecursiveBestFirstSearch(ef);
 
         List<Action> result = rbfs.search(problem);
 
+        System.out.print("Silvermoon");
         for(Action a : result)
         {
-            if(a instanceof EightPuzzleUpAction)
-            {
-                System.out.print("U-");
-            }
-            else if(a instanceof EightPuzzleDownAction)
-            {
-                System.out.print("D-");
-            }
-            else if(a instanceof EightPuzzleLeftAction)
-            {
-                System.out.print("L-");
-            }
-            else if(a instanceof EightPuzzleRightAction)
-            {
-                System.out.print("R-");
-            }
+            System.out.print(" -> " + ((MapMoveAction)a).getDestination());
         }
         System.out.println();
     }
